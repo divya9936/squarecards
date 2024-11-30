@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: rgba(18, 18, 128, 0.438);
+      }
+      .btn-goup {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+      }
+
+      .progress-button {
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background: transparent;
+        /* border-radius: 5px; */
+        transition: transform 1s ease;
+      }
+
+      .progress-wrapper {
+        position: relative;
+        width: 30%;
+        height: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
+
+      .circle-chart {
+        transform: rotate(-90deg); /* Rotate to start from top */
+      }
+
+      .circle-bg,
+      .circle-fg {
+        fill: none;
+        stroke-width: 1;
+      }
+
+      .circle-bg {
+        stroke: #e6e6e6; /* Light gray background */
+      }
+
+      .circle-fg {
+        stroke: blue;
+        stroke-dasharray: 314; /* Circumference of the circle (2 * π * 50) */
+        stroke-dashoffset: 314; /* Start with no progress */
+        transition: stroke-dashoffset 1s ease; /* Smooth transition */
+      }
+      .inner-circle-bg {
+        fill: white;
+      }
+
+      .circle-desc {
+        font-size: 5px;
+      }
+
+      .active {
+        transform: scale(2);
+      }
+
+      .image-behind-circle {
+        fill: pink;
+      }
+    </style>
+    <div class="btn-goup">
+      <button
+        class="progress-button"
+        onclick="setProgress(this,25,'A force multiplier for your business 1')"
+      >
+        Healthcare
+      </button>
+      <button
+        class="progress-button"
+        onclick="setProgress(this,50,'A force multiplier for your business 2')"
+      >
+        Finance
+      </button>
+      <button
+        class="progress-button"
+        onclick="setProgress(this,75,'A force multiplier for your business 3')"
+      >
+        Retail
+      </button>
+      <button
+        class="progress-button"
+        onclick="setProgress(this,100,'A force multiplier for your business 4')"
+      >
+        Digital Insurance
+      </button>
+    </div>
+  
+    <div class="progress-wrapper">
+      <svg class="circle-chart" viewBox="0 0 120 200">
+       
+        <defs>
+          <clipPath id="circle-clip">
+            <circle cx="60" cy="60" r="50" />
+          </clipPath>
+        </defs>
+        <image
+          href="https://toolxox.com/images/result-circle-cropped.png"
+          x="10"
+          y="10"
+          width="100"
+          height="100"
+          clip-path="url(#circle-clip)"
+        />
+      
+        <circle class="circle-bg" cx="60" cy="120" r="50" />
+        <circle class="circle-fg" cx="60" cy="120" r="50" />
+        <circle class="inner-circle-bg" cx="60" cy="120" r="45" />
+
+        <text
+          class="circle-desc"
+          x="60"
+          y="120"
+          text-anchor="middle"
+          alignment-baseline="middle"
+          transform="rotate(90, 60, 120)"
+        >
+          A force multiplier for your business 1
+        </text>
+      </svg>
+    </div>
+
+    <script>
+      window.onload = function () {
+        const defaultBtn = document.querySelector(".progress-button");
+        setProgress(defaultBtn, 25, "A force multiplier for your business 1");
+      };
+      function setProgress(currentBtn, percentage, text) {
+        const circleFg = document.querySelector(".circle-fg");
+        const circleText = document.querySelector(".circle-desc");
+
+        document
+          .querySelectorAll(".progress-button")
+          .forEach((btn) => btn.classList.remove("active"));
+        currentBtn.classList.add("active");
+        const offset = 314 - (percentage / 100) * 314; 
+        circleFg.style.strokeDashoffset = offset;
+
+        circleText.innerHTML = text;
+      }
+    </script>
+  </body>
+</html>
