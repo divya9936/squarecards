@@ -1,0 +1,22 @@
+  /* Adding the caps at the start and end of the border */
+  .progress-circle .cap {
+    position: absolute;
+    background-color: #a45dff;
+    width: 16px; /* Size of the rounded cap (double the border width) */
+    height: 16px;
+    border-radius: 50%;
+    z-index: 3;
+  }
+
+  .progress-circle .cap.start {
+    top: calc(50% - 8px);
+    left: calc(50% - 8px);
+  }
+
+  .progress-circle .cap.end {
+    top: -8px;
+    right: -8px;
+  }
+  <div class="cap start"></div>
+      <div class="cap end"></div>
+      
