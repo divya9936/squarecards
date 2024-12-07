@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  body {
+    height: 100vh;
+    background-color: rgb(6, 6, 69);
+    margin: 0;
+  }
+ 
+  .progress-ring {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 38.3%;
+    height: 38.3%;
+    margin: auto;
+    aspect-ratio: 1/1;
+    /* border: 6px solid #a45dff; */
+    position: relative;
+    z-index: 1;
+   
+    
+  }
+ 
+  .progress-ring::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: -3px;
+    /* Overlap the white border to eliminate the gap */
+    left: -3px;
+    width: calc(100% + 8px);
+    /* Expand to fully cover the gap */
+    height: calc(100% + 8px);
+    border: 10px solid #a45dff;
+    
+    border-radius: 50%;
+    z-index: 2;
+    box-sizing: border-box;
+    clip-path: polygon(50% 50%,100% 50%,100% 0,50% 0);
+    transition:clip-path 2s ease;
+  }
+ 
+  .outer-circle {
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 50%;
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    aspect-ratio: 1/1;
+    box-sizing: border-box;
+    margin: auto;
+    position: relative;
+    z-index: 0;
+  }
+ 
+  .all-circles-wrap {
+    display: flex;
+    position: relative;
+ 
+  }
+ 
+  .circle-img {
+    background: url(img_circle.png) no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    width: 33.33%;
+    aspect-ratio: 1/1;
+    margin-top: 2.5%;
+    /* height:33.33%; */
+    position: absolute;
+    left: 10%;
+    z-index: -1;
+  }
+ 
+  .circle {
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+ 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+   
+    aspect-ratio: 1/1;
+  }
+ 
+  .heading {
+    margin: 0 0 10px 0;
+    
+  }
+ 
+  .paragraph {
+    margin: 0 0 20px 0;
+   
+  }
+ 
+  .button {
+    background-color: #a45dff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+ 
+  .button:hover {
+    background-color: #e7e7e7;
+    /* Light gray on hover */
+  }
+ 
+  .btn-goup {
+    display: flex;
+ 
+    justify-content: space-around;
+    margin-bottom: 49px;
+  }
+ 
+  .progress-button {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background: transparent;
+    /* border-radius: 5px; */
+    transition: transform 1s ease;
+  }
+</style>
+ 
+<body>
+  <div class="btn-goup">
+    <button class="progress-button" onclick="setProgress(25)">
+      Healthcare
+    </button>
+    <button class="progress-button" onclick="setProgress(50)">
+      Finance
+    </button>
+    <button class="progress-button" onclick="setProgress(75)">
+      Retail
+    </button>
+    <button class="progress-button" onclick="setProgress(100)">
+      Digital Insurance
+    </button>
+  </div>
+  <div class="all-circles-wrap">
+    <div class="circle-img"></div>
+ 
+    <div class="progress-ring">
+      <div class="outer-circle">
+        <div class="circle">
+          <h2 class="heading">Welcome!</h2>
+          <p class="paragraph">
+            This is a simple example of a circle containing a heading, a
+            paragrapcontaining a headingThis is a simple example of a circle
+            containing a heading
+          </p>
+          <button class="button">Click Me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+   // Function to set the progress and move the purple border to the respective quadrant
+   function setProgress(percentage) {
+        let clipPath;
+        switch (percentage) {
+          case 25:
+            clipPath = "polygon(50% 50%, 100% 50%, 100% 0, 50% 0)"; // Top-right quadrant
+            break;
+          case 50:
+            clipPath = "polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%)"; // Bottom-right quadrant
+            break;
+          case 75:
+            clipPath = "polygon(50% 50%, 0 50%, 0 100%, 50% 100%)"; // Bottom-left quadrant
+            break;
+          case 100:
+            clipPath = "polygon(50% 50%, 0 50%, 0 0, 50% 0)"; // Top-left quadrant
+            break;
+        }
+
+        // Dynamically inject the new clip-path into the CSS
+        let style = document.createElement("style");
+        style.innerHTML = `
+        .progress-ring::before {
+          clip-path: ${clipPath};
+        }
+      `;
+        document.head.appendChild(style);
+      }
+      
+      let percentage=25;
+     setInterval(()=>{
+       setProgress(percentage);
+       percentage=percentage+25;
+       if(percentage>100)
+         percentage=25;
+     },2000);
+  </script>
+</body>
+ 
+</html>
